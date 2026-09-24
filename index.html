@@ -35,6 +35,7 @@
 
 <body>
 
+
 <a-scene
 
     mindar-image="imageTargetSrc: targets.mind;"
@@ -90,7 +91,7 @@
 
         <!--
             This parent controls
-            the animation of the car.
+            the car's animation.
         -->
 
         <a-entity id="carRotation">
@@ -303,9 +304,8 @@ async function startTour() {
 
     /* ================================================
        STARTING POSITION
-
-       Your known working starting orientation.
-       Viewer sees the BACK of the car.
+       
+       TOP VIEW
        ================================================ */
 
     carRotation.setAttribute(
@@ -318,14 +318,14 @@ async function startTour() {
     );
 
 
-    /* Let viewer see starting position */
+    /* Let viewer see the top/start */
 
     await wait(3000);
 
 
 
     /* ================================================
-       MOVEMENT 1 — FRONT
+       MOVEMENT 1 — BOTTOM
        ================================================ */
 
     await rotateTo(
@@ -343,7 +343,7 @@ async function startTour() {
 
 
     /* ================================================
-       MOVEMENT 2 — TOP
+       MOVEMENT 2 — FRONT
        ================================================ */
 
     await rotateTo(
@@ -379,12 +379,12 @@ async function startTour() {
 
 
     /* ================================================
-       MOVEMENT 4 — BOTTOM
+       MOVEMENT 4 — BACK
        ================================================ */
 
     await rotateTo(
-        90,
-        90,
+        0,
+        180,
         0,
         2500
     );
@@ -397,7 +397,7 @@ async function startTour() {
 
 
     /* ================================================
-       RETURN TO START
+       RETURN TO TOP
        ================================================ */
 
     await rotateTo(

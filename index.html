@@ -1,265 +1,270 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>STEM Racing AR Technical Presentation</title>
+```
+<title>STEM Racing AR Technical Presentation</title>
 
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-        }
-    </style>
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+    }
+</style>
+```
+
 </head>
 
 <body>
 
 <a-scene
-    mindar-image="imageTargetSrc: targets.mind;"
-    color-space="sRGB"
-    renderer="
-        colorManagement: true,
-        physicallyCorrectLights
-    "
-    vr-mode-ui="enabled: false"
-    device-orientation-permission-ui="enabled: false">
+ mindar-image="imageTargetSrc: targets.mind;"
+ color-space="sRGB"
+ renderer="
+     colorManagement: true,
+     physicallyCorrectLights
+ "
+ vr-mode-ui="enabled: false"
+ device-orientation-permission-ui="enabled: false">
 
-    <a-assets>
+```
+<a-assets>
 
-        <a-asset-item
-            id="carModel"
-            src="AR1.glb">
-        </a-asset-item>
+    <a-asset-item
+        id="carModel"
+        src="AR1.glb">
+    </a-asset-item>
 
-        <!-- Rounded navy panel -->
-        <img
-            id="panelTexture"
-            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='700'%3E%3Crect x='8' y='8' width='784' height='684' rx='55' fill='%230B1F3A'/%3E%3C/svg%3E">
+    <!-- Rounded navy panel -->
+    <img
+        id="panelTexture"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='700'%3E%3Crect x='8' y='8' width='784' height='684' rx='55' fill='%230B1F3A'/%3E%3C/svg%3E">
 
-    </a-assets>
-
-
-    <a-camera
-        position="0 0 0"
-        look-controls="enabled: false">
-    </a-camera>
+</a-assets>
 
 
-    <a-entity mindar-image-target="targetIndex: 0">
+<a-camera
+    position="0 0 0"
+    look-controls="enabled: false">
+</a-camera>
 
 
-        <!-- =====================================================
-             CAR
-             ===================================================== -->
-
-        <a-entity id="carRotation">
-
-            <a-gltf-model
-                id="carModelAR"
-                src="#carModel"
-                position="0 -1.5 0"
-                rotation="0 -90 0"
-                scale="15 15 15">
-            </a-gltf-model>
-
-        </a-entity>
+<a-entity mindar-image-target="targetIndex: 0">
 
 
-        <!-- =====================================================
-             TOP TEXT BOX
-             ===================================================== -->
+    <!-- =====================================================
+         CAR
+         ===================================================== -->
 
-        <a-entity
-            id="topBox"
-            visible="false"
-            position="2.45 0.85 0.5">
+    <a-entity id="carRotation">
 
-            <a-plane
-                width="2.45"
-                height="2.15"
-                src="#panelTexture">
-            </a-plane>
-
-            <a-text
-                value="TOP VIEW"
-                align="center"
-                width="3.2"
-                color="#FFFFFF"
-                position="0 0.72 0.03">
-            </a-text>
-
-            <a-text
-                value="The car follows a Kunai-inspired shape, with a triangular front that allows air to move smoothly around the body, while the straighter rear section guides the airflow more directionally toward the back."
-                align="center"
-                anchor="center"
-                baseline="center"
-                width="2.05"
-                wrap-count="27"
-                color="#FFFFFF"
-                position="0 -0.05 0.03">
-            </a-text>
-
-        </a-entity>
-
-
-        <!-- =====================================================
-             BOTTOM TEXT BOX
-             ===================================================== -->
-
-        <a-entity
-            id="bottomBox"
-            visible="false"
-            position="2.45 0.85 0.5">
-
-            <a-plane
-                width="2.45"
-                height="2.15"
-                src="#panelTexture">
-            </a-plane>
-
-            <a-text
-                value="BOTTOM VIEW"
-                align="center"
-                width="3.2"
-                color="#FFFFFF"
-                position="0 0.72 0.03">
-            </a-text>
-
-            <a-text
-                value="The underside features one central tunnel and two side tunnels that work together to guide airflow beneath the car and toward the rear pods, where the airflow continues through the rear tunnels."
-                align="center"
-                anchor="center"
-                baseline="center"
-                width="2.05"
-                wrap-count="27"
-                color="#FFFFFF"
-                position="0 -0.05 0.03">
-            </a-text>
-
-        </a-entity>
-
-
-        <!-- =====================================================
-             FRONT TEXT BOX
-             ===================================================== -->
-
-        <a-entity
-            id="frontBox"
-            visible="false"
-            position="2.45 0.85 0.5">
-
-            <a-plane
-                width="2.45"
-                height="2.15"
-                src="#panelTexture">
-            </a-plane>
-
-            <a-text
-                value="FRONT VIEW"
-                align="center"
-                width="3.2"
-                color="#FFFFFF"
-                position="0 0.72 0.03">
-            </a-text>
-
-            <a-text
-                value="The central tunnel forms the main air intake at the front of the car, while the front wing deflects incoming airflow away from the front wheels and the end plates further direct the airflow around the car."
-                align="center"
-                anchor="center"
-                baseline="center"
-                width="2.05"
-                wrap-count="27"
-                color="#FFFFFF"
-                position="0 -0.05 0.03">
-            </a-text>
-
-        </a-entity>
-
-
-        <!-- =====================================================
-             SIDE TEXT BOX
-             ===================================================== -->
-
-        <a-entity
-            id="sideBox"
-            visible="false"
-            position="2.45 0.85 0.5">
-
-            <a-plane
-                width="2.45"
-                height="2.15"
-                src="#panelTexture">
-            </a-plane>
-
-            <a-text
-                value="SIDE VIEW"
-                align="center"
-                width="3.2"
-                color="#FFFFFF"
-                position="0 0.72 0.03">
-            </a-text>
-
-            <a-text
-                value="The side pods are positioned toward the rear of the car to reduce weight and allow airflow to continue moving dynamically through the side tunnels toward the rear."
-                align="center"
-                anchor="center"
-                baseline="center"
-                width="2.05"
-                wrap-count="27"
-                color="#FFFFFF"
-                position="0 -0.05 0.03">
-            </a-text>
-
-        </a-entity>
-
-
-        <!-- =====================================================
-             BACK TEXT BOX
-             ===================================================== -->
-
-        <a-entity
-            id="backBox"
-            visible="false"
-            position="2.45 0.85 0.5">
-
-            <a-plane
-                width="2.45"
-                height="2.15"
-                src="#panelTexture">
-            </a-plane>
-
-            <a-text
-                value="REAR VIEW"
-                align="center"
-                width="3.2"
-                color="#FFFFFF"
-                position="0 0.72 0.03">
-            </a-text>
-
-            <a-text
-                value="The rear wing is designed to increase ground effect, using its thick aerodynamic profile to support the movement of airflow at the rear of the car."
-                align="center"
-                anchor="center"
-                baseline="center"
-                width="2.05"
-                wrap-count="27"
-                color="#FFFFFF"
-                position="0 -0.05 0.03">
-            </a-text>
-
-        </a-entity>
-
+        <a-gltf-model
+            id="carModelAR"
+            src="#carModel"
+            position="0 -1.5 0"
+            rotation="0 -90 0"
+            scale="15 15 15">
+        </a-gltf-model>
 
     </a-entity>
 
-</a-scene>
 
+    <!-- =====================================================
+         TOP TEXT BOX
+         ===================================================== -->
+
+    <a-entity
+        id="topBox"
+        visible="false"
+        position="2.45 0.85 0.5">
+
+        <a-plane
+            width="2.45"
+            height="2.15"
+            src="#panelTexture">
+        </a-plane>
+
+        <a-text
+            value="TOP VIEW"
+            align="center"
+            width="3.2"
+            color="#FFFFFF"
+            position="0 0.72 0.03">
+        </a-text>
+
+        <a-text
+            value="The car follows a Kunai-inspired shape, with a triangular front that allows air to move smoothly around the body, while the straighter rear section guides the airflow more directionally toward the back."
+            align="center"
+            anchor="center"
+            baseline="center"
+            width="2.35"
+            wrap-count="27"
+            color="#FFFFFF"
+            position="0 -0.05 0.03">
+        </a-text>
+
+    </a-entity>
+
+
+    <!-- =====================================================
+         BOTTOM TEXT BOX
+         ===================================================== -->
+
+    <a-entity
+        id="bottomBox"
+        visible="false"
+        position="2.45 0.85 0.5">
+
+        <a-plane
+            width="2.45"
+            height="2.15"
+            src="#panelTexture">
+        </a-plane>
+
+        <a-text
+            value="BOTTOM VIEW"
+            align="center"
+            width="3.2"
+            color="#FFFFFF"
+            position="0 0.72 0.03">
+        </a-text>
+
+        <a-text
+            value="The underside features one central tunnel and two side tunnels that work together to guide airflow beneath the car and toward the rear pods, where the airflow continues through the rear tunnels."
+            align="center"
+            anchor="center"
+            baseline="center"
+            width="2.35"
+            wrap-count="27"
+            color="#FFFFFF"
+            position="0 -0.05 0.03">
+        </a-text>
+
+    </a-entity>
+
+
+    <!-- =====================================================
+         FRONT TEXT BOX
+         ===================================================== -->
+
+    <a-entity
+        id="frontBox"
+        visible="false"
+        position="2.45 0.85 0.5">
+
+        <a-plane
+            width="2.45"
+            height="2.15"
+            src="#panelTexture">
+        </a-plane>
+
+        <a-text
+            value="FRONT VIEW"
+            align="center"
+            width="3.2"
+            color="#FFFFFF"
+            position="0 0.72 0.03">
+        </a-text>
+
+        <a-text
+            value="The central tunnel forms the main air intake at the front of the car, while the front wing deflects incoming airflow away from the front wheels and the end plates further direct the airflow around the car."
+            align="center"
+            anchor="center"
+            baseline="center"
+            width="2.35"
+            wrap-count="27"
+            color="#FFFFFF"
+            position="0 -0.05 0.03">
+        </a-text>
+
+    </a-entity>
+
+
+    <!-- =====================================================
+         SIDE TEXT BOX
+         ===================================================== -->
+
+    <a-entity
+        id="sideBox"
+        visible="false"
+        position="2.45 0.85 0.5">
+
+        <a-plane
+            width="2.45"
+            height="2.15"
+            src="#panelTexture">
+        </a-plane>
+
+        <a-text
+            value="SIDE VIEW"
+            align="center"
+            width="3.2"
+            color="#FFFFFF"
+            position="0 0.72 0.03">
+        </a-text>
+
+        <a-text
+            value="The side pods are positioned toward the rear of the car to reduce weight and allow airflow to continue moving dynamically through the side tunnels toward the rear."
+            align="center"
+            anchor="center"
+            baseline="center"
+            width="2.35"
+            wrap-count="27"
+            color="#FFFFFF"
+            position="0 -0.05 0.03">
+        </a-text>
+
+    </a-entity>
+
+
+    <!-- =====================================================
+         BACK TEXT BOX
+         ===================================================== -->
+
+    <a-entity
+        id="backBox"
+        visible="false"
+        position="2.45 0.85 0.5">
+
+        <a-plane
+            width="2.45"
+            height="2.15"
+            src="#panelTexture">
+        </a-plane>
+
+        <a-text
+            value="REAR VIEW"
+            align="center"
+            width="3.2"
+            color="#FFFFFF"
+            position="0 0.72 0.03">
+        </a-text>
+
+        <a-text
+            value="The rear wing is designed to increase ground effect, using its thick aerodynamic profile to support the movement of airflow at the rear of the car."
+            align="center"
+            anchor="center"
+            baseline="center"
+            width="2.35"
+            wrap-count="27"
+            color="#FFFFFF"
+            position="0 -0.05 0.03">
+        </a-text>
+
+    </a-entity>
+
+
+</a-entity>
+```
+
+</a-scene>
 
 <script>
 
@@ -295,50 +300,176 @@ let tourStarted = false;
 
 
 /* =========================================================
-   HIDE ALL TEXT BOXES
+   FADE EFFECT
    ========================================================= */
 
-function hideAllBoxes() {
+function fadeIn(box, duration = 700) {
 
-    topBox.setAttribute(
+    box.setAttribute(
         "visible",
-        false
+        true
     );
 
-    bottomBox.setAttribute(
-        "visible",
-        false
+    box.setAttribute(
+        "animation__fadein",
+        {
+            property: "material.opacity",
+            from: 0,
+            to: 1,
+            dur: duration,
+            easing: "easeInOutQuad"
+        }
     );
 
-    frontBox.setAttribute(
-        "visible",
-        false
-    );
+    /*
+     * Fade the individual objects inside the panel.
+     */
+    const children =
+        box.querySelectorAll(
+            "a-plane, a-text"
+        );
 
-    sideBox.setAttribute(
-        "visible",
-        false
-    );
+    children.forEach(child => {
 
-    backBox.setAttribute(
-        "visible",
-        false
-    );
+        child.setAttribute(
+            "material",
+            "transparent: true; opacity: 0"
+        );
+
+        child.setAttribute(
+            "animation__fadein",
+            {
+                property: "material.opacity",
+                from: 0,
+                to: 1,
+                dur: duration,
+                easing: "easeInOutQuad"
+            }
+        );
+
+    });
+
+}
+
+
+function fadeOut(box, duration = 600) {
+
+    return new Promise(resolve => {
+
+        const children =
+            box.querySelectorAll(
+                "a-plane, a-text"
+            );
+
+        let finished = 0;
+
+        if (children.length === 0) {
+            box.setAttribute(
+                "visible",
+                false
+            );
+            resolve();
+            return;
+        }
+
+        children.forEach(child => {
+
+            child.setAttribute(
+                "material",
+                "transparent: true"
+            );
+
+            child.setAttribute(
+                "animation__fadeout",
+                {
+                    property: "material.opacity",
+                    from: 1,
+                    to: 0,
+                    dur: duration,
+                    easing: "easeInOutQuad"
+                }
+            );
+
+            child.addEventListener(
+                "animationcomplete__fadeout",
+                () => {
+
+                    finished++;
+
+                    if (finished === children.length) {
+
+                        box.setAttribute(
+                            "visible",
+                            false
+                        );
+
+                        resolve();
+
+                    }
+
+                },
+                {
+                    once: true
+                }
+            );
+
+        });
+
+    });
 
 }
 
 
 /* =========================================================
-   SHOW ONE TEXT BOX
+   HIDE ALL BOXES
    ========================================================= */
 
-function showBox(box) {
+async function hideAllBoxes() {
 
-    hideAllBoxes();
+    const boxes = [
+        topBox,
+        bottomBox,
+        frontBox,
+        sideBox,
+        backBox
+    ];
 
-    box.setAttribute(
-        "visible",
-        true
+    for (const box of boxes) {
+
+        if (
+            box.getAttribute("visible") === true
+        ) {
+
+            await fadeOut(
+                box,
+                500
+            );
+
+        } else {
+
+            box.setAttribute(
+                "visible",
+                false
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   SHOW ONE BOX
+   ========================================================= */
+
+async function showBox(box) {
+
+    await hideAllBoxes();
+
+    fadeIn(
+        box,
+        700
     );
 
 }
@@ -517,7 +648,10 @@ async function startTour() {
         }
     );
 
-    showBox(topBox);
+    fadeIn(
+        topBox,
+        700
+    );
 
     await wait(4000);
 
@@ -526,7 +660,10 @@ async function startTour() {
        BOTTOM
        ===================================================== */
 
-    hideAllBoxes();
+    await fadeOut(
+        topBox,
+        600
+    );
 
     await rotateTo(
         0,
@@ -535,7 +672,10 @@ async function startTour() {
         2500
     );
 
-    showBox(bottomBox);
+    fadeIn(
+        bottomBox,
+        700
+    );
 
     await wait(4500);
 
@@ -544,7 +684,10 @@ async function startTour() {
        FRONT
        ===================================================== */
 
-    hideAllBoxes();
+    await fadeOut(
+        bottomBox,
+        600
+    );
 
     await rotateTo(
         -90,
@@ -553,7 +696,10 @@ async function startTour() {
         2500
     );
 
-    showBox(frontBox);
+    fadeIn(
+        frontBox,
+        700
+    );
 
     await wait(5000);
 
@@ -562,7 +708,10 @@ async function startTour() {
        SIDE
        ===================================================== */
 
-    hideAllBoxes();
+    await fadeOut(
+        frontBox,
+        600
+    );
 
     await rotateTo(
         -90,
@@ -571,7 +720,10 @@ async function startTour() {
         2500
     );
 
-    showBox(sideBox);
+    fadeIn(
+        sideBox,
+        700
+    );
 
     await wait(4500);
 
@@ -580,7 +732,10 @@ async function startTour() {
        BACK
        ===================================================== */
 
-    hideAllBoxes();
+    await fadeOut(
+        sideBox,
+        600
+    );
 
     await rotateTo(
         -90,
@@ -589,7 +744,10 @@ async function startTour() {
         2500
     );
 
-    showBox(backBox);
+    fadeIn(
+        backBox,
+        700
+    );
 
     await wait(4500);
 
@@ -598,7 +756,10 @@ async function startTour() {
        RETURN TO TOP
        ===================================================== */
 
-    hideAllBoxes();
+    await fadeOut(
+        backBox,
+        600
+    );
 
     await rotateTo(
         0,
@@ -607,9 +768,12 @@ async function startTour() {
         2500
     );
 
-    await wait(2000);
+    await wait(500);
 
-    showBox(topBox);
+    fadeIn(
+        topBox,
+        700
+    );
 
 }
 

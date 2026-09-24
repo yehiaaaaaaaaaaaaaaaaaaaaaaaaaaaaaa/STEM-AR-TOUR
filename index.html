@@ -1,3 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>STEM Racing AR Technical Presentation</title>
+
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+
+<a-scene
+    mindar-image="imageTargetSrc: targets.mind;"
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false">
+
+    <a-assets>
+        <a-asset-item
+            id="carModel"
+            src="AR1.glb">
+        </a-asset-item>
+    </a-assets>
+
+    <a-camera
+        position="0 0 0"
+        look-controls="enabled: false">
+    </a-camera>
+
+    <a-entity mindar-image-target="targetIndex: 0">
+
+        <a-entity id="carRotation">
+
+            <a-gltf-model
+                id="carModelAR"
+                src="#carModel"
+                position="0 -1.5 0"
+                rotation="0 -90 0"
+                scale="15 15 15">
+            </a-gltf-model>
+
+        </a-entity>
+
+    </a-entity>
+
+</a-scene>
+
 <script>
 
 const carRotation = document.querySelector("#carRotation");
@@ -5,8 +63,6 @@ const target = document.querySelector("[mindar-image-target]");
 
 let tourStarted = false;
 
-
-/* Start when the card is detected */
 target.addEventListener("targetFound", () => {
 
     if (tourStarted) return;
@@ -18,7 +74,6 @@ target.addEventListener("targetFound", () => {
 });
 
 
-/* Smooth rotation */
 function rotateTo(x, y, z, duration) {
 
     return new Promise(resolve => {
@@ -48,60 +103,9 @@ function rotateTo(x, y, z, duration) {
             });
 
             if (progress < 1) {
-
                 requestAnimationFrame(animate);
-
             } else {
-
                 resolve();
-
-            }
-        }
-
-        requestAnimationFrame(animate);
-
-    });
-
-}
-
-
-/* Smooth floating movement */
-function moveTo(x, y, z, duration) {
-
-    return new Promise(resolve => {
-
-        const start = carRotation.getAttribute("position");
-
-        const startX = start.x;
-        const startY = start.y;
-        const startZ = start.z;
-
-        const startTime = performance.now();
-
-        function animate(time) {
-
-            const progress =
-                Math.min((time - startTime) / duration, 1);
-
-            const eased =
-                progress < 0.5
-                    ? 2 * progress * progress
-                    : 1 - Math.pow(-2 * progress + 2, 2) / 2;
-
-            carRotation.setAttribute("position", {
-                x: startX + (x - startX) * eased,
-                y: startY + (y - startY) * eased,
-                z: startZ + (z - startZ) * eased
-            });
-
-            if (progress < 1) {
-
-                requestAnimationFrame(animate);
-
-            } else {
-
-                resolve();
-
             }
         }
 
@@ -121,20 +125,7 @@ function wait(milliseconds) {
 }
 
 
-/* ================================
-   THREE-MOVEMENT PRESENTATION
-   ================================ */
-
 async function startTour() {
-
-    /*
-        STARTING VIEW
-
-        The viewer sees the BACK of the car.
-
-        We keep the car exactly where it
-        currently works.
-    */
 
     carRotation.setAttribute("rotation", {
         x: 0,
@@ -142,71 +133,29 @@ async function startTour() {
         z: 0
     });
 
-    carRotation.setAttribute("position", {
-        x: 0,
-        y: 0,
-        z: 0
-    });
+    await wait(3000);
 
-
-    /* Let the viewer see the starting view */
-    await wait(2500);
-
-
-    /*
-        FLOAT UP
-
-        The car gently lifts away from
-        the card before the technical movement.
-    */
-
-    await moveTo(0, 0.35, 0, 1200);
-
-    await wait(1000);
-
-
-    /*
-        MOVEMENT 1
-        =========================
-
-        UNDERBODY / UPSIDE-DOWN VIEW
-
-        The car rotates backward so
-        the underside becomes visible.
-    */
-
-    await rotateTo(180, 0, 0, 2500);
-
-    await wait(3500);
-
-
-    /*
-        MOVEMENT 2
-        =========================
-
-        SIDE VIEW
-
-        Rotate the car onto its side.
-    */
-
-    await rotateTo(180, -90, 0, 2500);
-
-    await wait(3500);
-
-
-    /*
-        MOVEMENT 3
-        =========================
-
-        RETURN TO ORIGINAL VIEW
-    */
-
-    await rotateTo(0, 0, 0, 2500);
-
-    await moveTo(0, 0, 0, 1200);
+    await rotateTo(-90, 0, 0, 2500);
 
     await wait(3000);
+
+    await rotateTo(0, -90, 0, 2500);
+
+    await wait(3000);
+
+    await rotateTo(90, -90, 0, 2500);
+
+    await wait(3000);
+
+    await rotateTo(0, -180, 0, 2500);
+
+    await wait(3000);
+
+    await rotateTo(0, -360, 0, 2500);
 
 }
 
 </script>
+
+</body>
+</html>

@@ -86,20 +86,25 @@
         position="2.45 0.85 0.5">
 
         <a-plane
+            class="panelBackground"
             width="2.45"
             height="2.15"
-            src="#panelTexture">
+            src="#panelTexture"
+            material="transparent: true; opacity: 0">
         </a-plane>
 
         <a-text
+            class="panelText"
             value="TOP VIEW"
             align="center"
             width="3.2"
             color="#FFFFFF"
+            opacity="0"
             position="0 0.72 0.03">
         </a-text>
 
         <a-text
+            class="panelText"
             value="The car follows a Kunai-inspired shape, with a triangular front that allows air to move smoothly around the body, while the straighter rear section guides the airflow more directionally toward the back."
             align="center"
             anchor="center"
@@ -107,6 +112,7 @@
             width="2.35"
             wrap-count="27"
             color="#FFFFFF"
+            opacity="0"
             position="0 -0.05 0.03">
         </a-text>
 
@@ -123,20 +129,25 @@
         position="2.45 0.85 0.5">
 
         <a-plane
+            class="panelBackground"
             width="2.45"
             height="2.15"
-            src="#panelTexture">
+            src="#panelTexture"
+            material="transparent: true; opacity: 0">
         </a-plane>
 
         <a-text
+            class="panelText"
             value="BOTTOM VIEW"
             align="center"
             width="3.2"
             color="#FFFFFF"
+            opacity="0"
             position="0 0.72 0.03">
         </a-text>
 
         <a-text
+            class="panelText"
             value="The underside features one central tunnel and two side tunnels that work together to guide airflow beneath the car and toward the rear pods, where the airflow continues through the rear tunnels."
             align="center"
             anchor="center"
@@ -144,6 +155,7 @@
             width="2.35"
             wrap-count="27"
             color="#FFFFFF"
+            opacity="0"
             position="0 -0.05 0.03">
         </a-text>
 
@@ -160,20 +172,25 @@
         position="2.45 0.85 0.5">
 
         <a-plane
+            class="panelBackground"
             width="2.45"
             height="2.15"
-            src="#panelTexture">
+            src="#panelTexture"
+            material="transparent: true; opacity: 0">
         </a-plane>
 
         <a-text
+            class="panelText"
             value="FRONT VIEW"
             align="center"
             width="3.2"
             color="#FFFFFF"
+            opacity="0"
             position="0 0.72 0.03">
         </a-text>
 
         <a-text
+            class="panelText"
             value="The central tunnel forms the main air intake at the front of the car, while the front wing deflects incoming airflow away from the front wheels and the end plates further direct the airflow around the car."
             align="center"
             anchor="center"
@@ -181,6 +198,7 @@
             width="2.35"
             wrap-count="27"
             color="#FFFFFF"
+            opacity="0"
             position="0 -0.05 0.03">
         </a-text>
 
@@ -197,27 +215,33 @@
         position="2.45 0.85 0.5">
 
         <a-plane
+            class="panelBackground"
             width="2.45"
             height="2.15"
-            src="#panelTexture">
+            src="#panelTexture"
+            material="transparent: true; opacity: 0">
         </a-plane>
 
         <a-text
+            class="panelText"
             value="SIDE VIEW"
             align="center"
             width="3.2"
             color="#FFFFFF"
+            opacity="0"
             position="0 0.72 0.03">
         </a-text>
 
         <a-text
-            value="The side pods are positioned toward the rear of the car to reduce weight and allow airflow to continue moving dynamically through the side tunnels toward the rear."
+            class="panelText"
+            value="The side pods are pushed up into the body of the car, which reduces weight and allows airflow to continue moving dynamically through the side tunnels toward the rear."
             align="center"
             anchor="center"
             baseline="center"
             width="2.35"
             wrap-count="27"
             color="#FFFFFF"
+            opacity="0"
             position="0 -0.05 0.03">
         </a-text>
 
@@ -225,7 +249,7 @@
 
 
     <!-- =====================================================
-         BACK TEXT BOX
+         REAR TEXT BOX
          ===================================================== -->
 
     <a-entity
@@ -234,20 +258,25 @@
         position="2.45 0.85 0.5">
 
         <a-plane
+            class="panelBackground"
             width="2.45"
             height="2.15"
-            src="#panelTexture">
+            src="#panelTexture"
+            material="transparent: true; opacity: 0">
         </a-plane>
 
         <a-text
+            class="panelText"
             value="REAR VIEW"
             align="center"
             width="3.2"
             color="#FFFFFF"
+            opacity="0"
             position="0 0.72 0.03">
         </a-text>
 
         <a-text
+            class="panelText"
             value="The rear wing is designed to increase ground effect, using its thick aerodynamic profile to support the movement of airflow at the rear of the car."
             align="center"
             anchor="center"
@@ -255,6 +284,7 @@
             width="2.35"
             wrap-count="27"
             color="#FFFFFF"
+            opacity="0"
             position="0 -0.05 0.03">
         </a-text>
 
@@ -279,7 +309,6 @@ const carRotation =
 const target =
     document.querySelector("[mindar-image-target]");
 
-
 const topBox =
     document.querySelector("#topBox");
 
@@ -300,7 +329,45 @@ let tourStarted = false;
 
 
 /* =========================================================
-   FADE EFFECT
+   SET OPACITY
+   ========================================================= */
+
+function setBoxOpacity(box, opacity) {
+
+    const background =
+        box.querySelector(".panelBackground");
+
+    const textElements =
+        box.querySelectorAll(".panelText");
+
+
+    if (background) {
+
+        background.setAttribute(
+            "material",
+            {
+                transparent: true,
+                opacity: opacity
+            }
+        );
+
+    }
+
+
+    textElements.forEach(text => {
+
+        text.setAttribute(
+            "opacity",
+            opacity
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   FADE IN
    ========================================================= */
 
 function fadeIn(box, duration = 700) {
@@ -310,36 +377,41 @@ function fadeIn(box, duration = 700) {
         true
     );
 
-    box.setAttribute(
-        "animation__fadein",
-        {
-            property: "material.opacity",
-            from: 0,
-            to: 1,
-            dur: duration,
-            easing: "easeInOutQuad"
-        }
+    setBoxOpacity(
+        box,
+        0
     );
 
-    /*
-     * Fade the individual objects inside the panel.
-     */
-    const children =
-        box.querySelectorAll(
-            "a-plane, a-text"
-        );
 
-    children.forEach(child => {
+    const background =
+        box.querySelector(".panelBackground");
 
-        child.setAttribute(
-            "material",
-            "transparent: true; opacity: 0"
-        );
+    const textElements =
+        box.querySelectorAll(".panelText");
 
-        child.setAttribute(
+
+    if (background) {
+
+        background.setAttribute(
             "animation__fadein",
             {
                 property: "material.opacity",
+                from: 0,
+                to: 1,
+                dur: duration,
+                easing: "easeInOutQuad"
+            }
+        );
+
+    }
+
+
+    textElements.forEach(text => {
+
+        text.setAttribute(
+            "animation__fadein",
+            {
+                property: "opacity",
                 from: 0,
                 to: 1,
                 dur: duration,
@@ -352,34 +424,88 @@ function fadeIn(box, duration = 700) {
 }
 
 
+/* =========================================================
+   FADE OUT
+   ========================================================= */
+
 function fadeOut(box, duration = 600) {
 
     return new Promise(resolve => {
 
-        const children =
-            box.querySelectorAll(
-                "a-plane, a-text"
-            );
+        if (
+            box.getAttribute("visible") !== true
+        ) {
+
+            resolve();
+            return;
+
+        }
+
+
+        const background =
+            box.querySelector(".panelBackground");
+
+        const textElements =
+            box.querySelectorAll(".panelText");
+
+
+        let elements =
+            [];
+
+        if (background) {
+            elements.push(background);
+        }
+
+        textElements.forEach(text => {
+            elements.push(text);
+        });
+
 
         let finished = 0;
 
-        if (children.length === 0) {
+
+        function finishedOne() {
+
+            finished++;
+
+            if (
+                finished === elements.length
+            ) {
+
+                box.setAttribute(
+                    "visible",
+                    false
+                );
+
+                setBoxOpacity(
+                    box,
+                    0
+                );
+
+                resolve();
+
+            }
+
+        }
+
+
+        if (elements.length === 0) {
+
             box.setAttribute(
                 "visible",
                 false
             );
+
             resolve();
+
             return;
+
         }
 
-        children.forEach(child => {
 
-            child.setAttribute(
-                "material",
-                "transparent: true"
-            );
+        if (background) {
 
-            child.setAttribute(
+            background.setAttribute(
                 "animation__fadeout",
                 {
                     property: "material.opacity",
@@ -390,24 +516,33 @@ function fadeOut(box, duration = 600) {
                 }
             );
 
-            child.addEventListener(
+            background.addEventListener(
                 "animationcomplete__fadeout",
-                () => {
+                finishedOne,
+                {
+                    once: true
+                }
+            );
 
-                    finished++;
+        }
 
-                    if (finished === children.length) {
 
-                        box.setAttribute(
-                            "visible",
-                            false
-                        );
+        textElements.forEach(text => {
 
-                        resolve();
+            text.setAttribute(
+                "animation__fadeout",
+                {
+                    property: "opacity",
+                    from: 1,
+                    to: 0,
+                    dur: duration,
+                    easing: "easeInOutQuad"
+                }
+            );
 
-                    }
-
-                },
+            text.addEventListener(
+                "animationcomplete__fadeout",
+                finishedOne,
                 {
                     once: true
                 }
@@ -434,6 +569,7 @@ async function hideAllBoxes() {
         backBox
     ];
 
+
     for (const box of boxes) {
 
         if (
@@ -450,6 +586,11 @@ async function hideAllBoxes() {
             box.setAttribute(
                 "visible",
                 false
+            );
+
+            setBoxOpacity(
+                box,
+                0
             );
 
         }
@@ -729,7 +870,7 @@ async function startTour() {
 
 
     /* =====================================================
-       BACK
+       REAR
        ===================================================== */
 
     await fadeOut(

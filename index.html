@@ -7,7 +7,6 @@
     <title>STEM Racing AR Technical Presentation</title>
 
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
     <style>
@@ -20,39 +19,165 @@
 
 <body>
 
-    <a-scene
-        mindar-image="imageTargetSrc: targets.mind;"
-        color-space="sRGB"
-        renderer="colorManagement: true, physicallyCorrectLights"
-        vr-mode-ui="enabled: false"
-        device-orientation-permission-ui="enabled: false">
+<a-scene
+    mindar-image="imageTargetSrc: targets.mind;"
+    color-space="sRGB"
+    renderer="colorManagement: true, physicallyCorrectLights"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false">
 
-        <a-assets>
-            <a-asset-item
-                id="carModel"
-                src="AR1.glb">
-            </a-asset-item>
-        </a-assets>
+    <a-assets>
+        <a-asset-item
+            id="carModel"
+            src="AR1.glb">
+        </a-asset-item>
+    </a-assets>
 
-        <a-camera
-            position="0 0 0"
-            look-controls="enabled: false">
-        </a-camera>
+    <a-camera
+        position="0 0 0"
+        look-controls="enabled: false">
+    </a-camera>
 
-        <a-entity mindar-image-target="targetIndex: 0">
+    <a-entity
+        id="carRotation"
+        mindar-image-target="targetIndex: 0">
 
-            <!-- CAR -->
-            <a-gltf-model
-                id="carModelAR"
-                src="#carModel"
-                position="0 -1.5 0"
-                rotation="0 -90 0"
-                scale="15 15 15">
-            </a-gltf-model>
+        <!-- YOUR WORKING CAR -->
+        <a-gltf-model
+            id="carModelAR"
+            src="#carModel"
+            position="0 -1.5 0"
+            rotation="0 -90 0"
+            scale="15 15 15">
+        </a-gltf-model>
 
-        </a-entity>
+    </a-entity>
 
-    </a-scene>
+</a-scene>
+
+<script>
+
+const carRotation = document.querySelector("#carRotation");
+
+let tourStarted = false;
+
+carRotation.addEventListener("targetFound", () => {
+
+    if (tourStarted) return;
+
+    tourStarted = true;
+
+    startTechnicalTour();
+
+});
+
+function rotateTo(y, duration = 3000) {
+
+    return new Promise(resolve => {
+
+        const startRotation =
+            carRotation.getAttribute("rotation");
+
+        const startY = startRotation.y;
+
+        const startTime = performance.now();
+
+        function animate(time) {
+
+            const progress =
+                Math.min((time - startTime) / duration, 1);
+
+            // Smooth ease-in / ease-out
+            const eased =
+                progress < 0.5
+                    ? 2 * progress * progress
+                    : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+
+            const currentY =
+                startY + (y - startY) * eased;
+
+            carRotation.setAttribute(
+                "rotation",
+                `0 ${currentY} 0`
+            );
+
+            if (progress < 1) {
+
+                requestAnimationFrame(animate);
+
+            } else {
+
+                resolve();
+
+            }
+        }
+
+        requestAnimationFrame(animate);
+
+    });
+
+}
+
+
+async function startTechnicalTour() {
+
+    // Starting position
+    carRotation.setAttribute(
+        "rotation",
+        "0 0 0"
+    );
+
+    // Wait before beginning
+    await wait(2000);
+
+
+    // FRONT / STARTING VIEW
+    await rotateTo(0, 2500);
+
+    await wait(3500);
+
+
+    // TOP VIEW
+    await rotateTo(-90, 2500);
+
+    await wait(3500);
+
+
+    // SIDE VIEW
+    await rotateTo(-180, 2500);
+
+    await wait(3500);
+
+
+    // BOTTOM VIEW
+    await rotateTo(-270, 2500);
+
+    await wait(3500);
+
+
+    // REAR VIEW
+    await rotateTo(-360, 2500);
+
+    await wait(3500);
+
+
+    // Return to starting view
+    await rotateTo(-450, 2500);
+
+}
+
+
+function wait(milliseconds) {
+
+    return new Promise(resolve => {
+
+        setTimeout(resolve, milliseconds);
+
+    });
+
+}
+
+</script>
 
 </body>
 </html>

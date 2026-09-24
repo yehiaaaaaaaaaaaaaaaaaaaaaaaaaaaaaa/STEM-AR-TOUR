@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>STEM Racing AR Technical Presentation</title>
 
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
@@ -30,18 +31,27 @@
     device-orientation-permission-ui="enabled: false">
 
     <a-assets>
+
         <a-asset-item
             id="carModel"
             src="AR1.glb">
         </a-asset-item>
+
     </a-assets>
+
 
     <a-camera
         position="0 0 0"
         look-controls="enabled: false">
     </a-camera>
 
+
     <a-entity mindar-image-target="targetIndex: 0">
+
+
+        <!-- =====================================================
+             CAR
+             ===================================================== -->
 
         <a-entity id="carRotation">
 
@@ -55,11 +65,208 @@
 
         </a-entity>
 
+
+        <!-- =====================================================
+             TOP TEXT BOX
+             ===================================================== -->
+
+        <a-entity
+            id="topBox"
+            visible="false"
+            position="3.0 1.2 0.5">
+
+            <a-plane
+                width="3.8"
+                height="3.4"
+                color="#111111"
+                opacity="0.94">
+            </a-plane>
+
+            <a-text
+                value="TOP VIEW"
+                align="center"
+                width="4.5"
+                color="#FFFFFF"
+                position="0 1.15 0.03">
+            </a-text>
+
+            <a-text
+                value="The car follows a Kunai-inspired shape, with a triangular front that allows air to move smoothly around the body, while the straighter rear section guides the airflow more directionally toward the back."
+                align="center"
+                anchor="center"
+                baseline="center"
+                width="3.2"
+                wrap-count="32"
+                color="#FFFFFF"
+                position="0 -0.05 0.03">
+            </a-text>
+
+        </a-entity>
+
+
+        <!-- =====================================================
+             BOTTOM TEXT BOX
+             ===================================================== -->
+
+        <a-entity
+            id="bottomBox"
+            visible="false"
+            position="3.0 1.2 0.5">
+
+            <a-plane
+                width="3.8"
+                height="3.4"
+                color="#111111"
+                opacity="0.94">
+            </a-plane>
+
+            <a-text
+                value="BOTTOM VIEW"
+                align="center"
+                width="4.5"
+                color="#FFFFFF"
+                position="0 1.15 0.03">
+            </a-text>
+
+            <a-text
+                value="The underside features one central tunnel and two side tunnels that work together to guide airflow beneath the car and toward the rear pods, where the airflow continues through the rear tunnels."
+                align="center"
+                anchor="center"
+                baseline="center"
+                width="3.2"
+                wrap-count="32"
+                color="#FFFFFF"
+                position="0 -0.05 0.03">
+            </a-text>
+
+        </a-entity>
+
+
+        <!-- =====================================================
+             FRONT TEXT BOX
+             ===================================================== -->
+
+        <a-entity
+            id="frontBox"
+            visible="false"
+            position="3.0 1.2 0.5">
+
+            <a-plane
+                width="3.8"
+                height="3.4"
+                color="#111111"
+                opacity="0.94">
+            </a-plane>
+
+            <a-text
+                value="FRONT VIEW"
+                align="center"
+                width="4.5"
+                color="#FFFFFF"
+                position="0 1.15 0.03">
+            </a-text>
+
+            <a-text
+                value="The central tunnel forms the main air intake at the front of the car, while the front wing deflects incoming airflow away from the front wheels and the end plates further direct the airflow around the car."
+                align="center"
+                anchor="center"
+                baseline="center"
+                width="3.2"
+                wrap-count="32"
+                color="#FFFFFF"
+                position="0 -0.05 0.03">
+            </a-text>
+
+        </a-entity>
+
+
+        <!-- =====================================================
+             SIDE TEXT BOX
+             ===================================================== -->
+
+        <a-entity
+            id="sideBox"
+            visible="false"
+            position="3.0 1.2 0.5">
+
+            <a-plane
+                width="3.8"
+                height="3.4"
+                color="#111111"
+                opacity="0.94">
+            </a-plane>
+
+            <a-text
+                value="SIDE VIEW"
+                align="center"
+                width="4.5"
+                color="#FFFFFF"
+                position="0 1.15 0.03">
+            </a-text>
+
+            <a-text
+                value="The side pods are positioned toward the rear of the car to reduce weight and allow airflow to continue moving dynamically through the side tunnels toward the rear."
+                align="center"
+                anchor="center"
+                baseline="center"
+                width="3.2"
+                wrap-count="32"
+                color="#FFFFFF"
+                position="0 -0.05 0.03">
+            </a-text>
+
+        </a-entity>
+
+
+        <!-- =====================================================
+             BACK TEXT BOX
+             ===================================================== -->
+
+        <a-entity
+            id="backBox"
+            visible="false"
+            position="3.0 1.2 0.5">
+
+            <a-plane
+                width="3.8"
+                height="3.4"
+                color="#111111"
+                opacity="0.94">
+            </a-plane>
+
+            <a-text
+                value="REAR VIEW"
+                align="center"
+                width="4.5"
+                color="#FFFFFF"
+                position="0 1.15 0.03">
+            </a-text>
+
+            <a-text
+                value="The rear wing is designed to increase ground effect, using its thick aerodynamic profile to support the movement of airflow at the rear of the car."
+                align="center"
+                anchor="center"
+                baseline="center"
+                width="3.2"
+                wrap-count="32"
+                color="#FFFFFF"
+                position="0 -0.05 0.03">
+            </a-text>
+
+        </a-entity>
+
+
     </a-entity>
 
 </a-scene>
 
+
 <script>
+
+
+/* =========================================================
+   ELEMENTS
+   ========================================================= */
 
 const carRotation =
     document.querySelector("#carRotation");
@@ -67,32 +274,124 @@ const carRotation =
 const target =
     document.querySelector("[mindar-image-target]");
 
+
+const topBox =
+    document.querySelector("#topBox");
+
+const bottomBox =
+    document.querySelector("#bottomBox");
+
+const frontBox =
+    document.querySelector("#frontBox");
+
+const sideBox =
+    document.querySelector("#sideBox");
+
+const backBox =
+    document.querySelector("#backBox");
+
+
 let tourStarted = false;
 
 
-target.addEventListener("targetFound", () => {
+/* =========================================================
+   HIDE ALL TEXT BOXES
+   ========================================================= */
 
-    if (tourStarted) {
-        return;
+function hideAllBoxes() {
+
+    topBox.setAttribute(
+        "visible",
+        false
+    );
+
+    bottomBox.setAttribute(
+        "visible",
+        false
+    );
+
+    frontBox.setAttribute(
+        "visible",
+        false
+    );
+
+    sideBox.setAttribute(
+        "visible",
+        false
+    );
+
+    backBox.setAttribute(
+        "visible",
+        false
+    );
+
+}
+
+
+/* =========================================================
+   SHOW ONE TEXT BOX
+   ========================================================= */
+
+function showBox(box) {
+
+    hideAllBoxes();
+
+    box.setAttribute(
+        "visible",
+        true
+    );
+
+}
+
+
+/* =========================================================
+   TARGET FOUND
+   ========================================================= */
+
+target.addEventListener(
+    "targetFound",
+    () => {
+
+        if (tourStarted) {
+            return;
+        }
+
+        tourStarted = true;
+
+        startTour();
+
     }
-
-    tourStarted = true;
-
-    startTour();
-
-});
+);
 
 
-function rotateTo(x, y, z, duration) {
+/* =========================================================
+   ROTATION
+   ========================================================= */
+
+function rotateTo(
+    x,
+    y,
+    z,
+    duration
+) {
 
     return new Promise(resolve => {
 
         const start =
-            carRotation.getAttribute("rotation");
+            carRotation.getAttribute(
+                "rotation"
+            );
 
-        const startX = start.x;
-        const startY = start.y;
-        const startZ = start.z;
+
+        const startX =
+            start.x;
+
+        const startY =
+            start.y;
+
+        const startZ =
+            start.z;
+
 
         const startTime =
             performance.now();
@@ -102,32 +401,44 @@ function rotateTo(x, y, z, duration) {
 
             const progress =
                 Math.min(
-                    (time - startTime) / duration,
+                    (time - startTime) /
+                    duration,
                     1
                 );
 
 
             const eased =
                 progress < 0.5
-                    ? 2 * progress * progress
+                    ? 2 *
+                      progress *
+                      progress
+
                     : 1 -
                       Math.pow(
-                          -2 * progress + 2,
+                          -2 *
+                          progress +
+                          2,
                           2
-                      ) / 2;
+                      ) /
+                      2;
 
 
             const currentX =
                 startX +
-                (x - startX) * eased;
+                (x - startX) *
+                eased;
+
 
             const currentY =
                 startY +
-                (y - startY) * eased;
+                (y - startY) *
+                eased;
+
 
             const currentZ =
                 startZ +
-                (z - startZ) * eased;
+                (z - startZ) *
+                eased;
 
 
             carRotation.setAttribute(
@@ -142,7 +453,9 @@ function rotateTo(x, y, z, duration) {
 
             if (progress < 1) {
 
-                requestAnimationFrame(animate);
+                requestAnimationFrame(
+                    animate
+                );
 
             } else {
 
@@ -153,20 +466,8 @@ function rotateTo(x, y, z, duration) {
         }
 
 
-        requestAnimationFrame(animate);
-
-    });
-
-}
-
-
-function wait(milliseconds) {
-
-    return new Promise(resolve => {
-
-        setTimeout(
-            resolve,
-            milliseconds
+        requestAnimationFrame(
+            animate
         );
 
     });
@@ -174,11 +475,38 @@ function wait(milliseconds) {
 }
 
 
+/* =========================================================
+   WAIT
+   ========================================================= */
+
+function wait(
+    milliseconds
+) {
+
+    return new Promise(
+        resolve => {
+
+            setTimeout(
+                resolve,
+                milliseconds
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   MAIN TOUR
+   ========================================================= */
+
 async function startTour() {
 
-    /* =========================
+
+    /* =====================================================
        TOP
-       ========================= */
+       ===================================================== */
 
     carRotation.setAttribute(
         "rotation",
@@ -189,12 +517,16 @@ async function startTour() {
         }
     );
 
-    await wait(3000);
+    showBox(topBox);
+
+    await wait(4000);
 
 
-    /* =========================
+    /* =====================================================
        BOTTOM
-       ========================= */
+       ===================================================== */
+
+    hideAllBoxes();
 
     await rotateTo(
         0,
@@ -203,12 +535,16 @@ async function startTour() {
         2500
     );
 
-    await wait(3500);
+    showBox(bottomBox);
+
+    await wait(4500);
 
 
-    /* =========================
+    /* =====================================================
        FRONT
-       ========================= */
+       ===================================================== */
+
+    hideAllBoxes();
 
     await rotateTo(
         -90,
@@ -217,12 +553,16 @@ async function startTour() {
         2500
     );
 
-    await wait(3500);
+    showBox(frontBox);
+
+    await wait(5000);
 
 
-    /* =========================
+    /* =====================================================
        SIDE
-       ========================= */
+       ===================================================== */
+
+    hideAllBoxes();
 
     await rotateTo(
         -90,
@@ -231,14 +571,17 @@ async function startTour() {
         2500
     );
 
-    await wait(3500);
+    showBox(sideBox);
+
+    await wait(4500);
 
 
-    /* =========================
+    /* =====================================================
        BACK
-       Same 90° movement
-       as FRONT → SIDE
-       ========================= */
+       SAME 90° MOVEMENT
+       ===================================================== */
+
+    hideAllBoxes();
 
     await rotateTo(
         -90,
@@ -247,12 +590,16 @@ async function startTour() {
         2500
     );
 
-    await wait(3500);
+    showBox(backBox);
+
+    await wait(4500);
 
 
-    /* =========================
+    /* =====================================================
        RETURN TO TOP
-       ========================= */
+       ===================================================== */
+
+    hideAllBoxes();
 
     await rotateTo(
         0,
@@ -262,6 +609,8 @@ async function startTour() {
     );
 
     await wait(2000);
+
+    showBox(topBox);
 
 }
 

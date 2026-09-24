@@ -38,47 +38,59 @@
         look-controls="enabled: false">
     </a-camera>
 
-    <a-entity
-        id="carRotation"
-        mindar-image-target="targetIndex: 0">
 
-        <!-- YOUR WORKING CAR -->
-        <a-gltf-model
-            id="carModelAR"
-            src="#carModel"
-            position="0 -1.5 0"
-            rotation="0 -90 0"
-            scale="15 15 15">
-        </a-gltf-model>
+    <!-- MIN DAR TRACKING TARGET -->
+    <a-entity mindar-image-target="targetIndex: 0">
+
+        <!-- THIS CONTROLS THE CAR ROTATION -->
+        <a-entity id="carRotation">
+
+            <!-- YOUR WORKING CAR -->
+            <a-gltf-model
+                id="carModelAR"
+                src="#carModel"
+                position="0 -1.5 0"
+                rotation="0 -90 0"
+                scale="15 15 15">
+            </a-gltf-model>
+
+        </a-entity>
 
     </a-entity>
 
 </a-scene>
 
+
 <script>
 
 const carRotation = document.querySelector("#carRotation");
+const target = document.querySelector("[mindar-image-target]");
 
 let tourStarted = false;
 
-carRotation.addEventListener("targetFound", () => {
+
+/* Start when the card is detected */
+target.addEventListener("targetFound", () => {
 
     if (tourStarted) return;
 
     tourStarted = true;
 
-    startTechnicalTour();
+    startTour();
 
 });
 
-function rotateTo(y, duration = 3000) {
+
+/* Smooth rotation */
+function rotateTo(x, y, z, duration) {
 
     return new Promise(resolve => {
 
-        const startRotation =
-            carRotation.getAttribute("rotation");
+        const start = carRotation.getAttribute("rotation");
 
-        const startY = startRotation.y;
+        const startX = start.x;
+        const startY = start.y;
+        const startZ = start.z;
 
         const startTime = performance.now();
 
@@ -87,19 +99,26 @@ function rotateTo(y, duration = 3000) {
             const progress =
                 Math.min((time - startTime) / duration, 1);
 
-            // Smooth ease-in / ease-out
+            /* Smooth ease in / ease out */
             const eased =
                 progress < 0.5
                     ? 2 * progress * progress
                     : 1 - Math.pow(-2 * progress + 2, 2) / 2;
 
+            const currentX =
+                startX + (x - startX) * eased;
+
             const currentY =
                 startY + (y - startY) * eased;
 
-            carRotation.setAttribute(
-                "rotation",
-                `0 ${currentY} 0`
-            );
+            const currentZ =
+                startZ + (z - startZ) * eased;
+
+            carRotation.setAttribute("rotation", {
+                x: currentX,
+                y: currentY,
+                z: currentZ
+            });
 
             if (progress < 1) {
 
@@ -119,61 +138,70 @@ function rotateTo(y, duration = 3000) {
 }
 
 
-async function startTechnicalTour() {
+function wait(milliseconds) {
 
-    // Starting position
-    carRotation.setAttribute(
-        "rotation",
-        "0 0 0"
-    );
-
-    // Wait before beginning
-    await wait(2000);
-
-
-    // FRONT / STARTING VIEW
-    await rotateTo(0, 2500);
-
-    await wait(3500);
-
-
-    // TOP VIEW
-    await rotateTo(-90, 2500);
-
-    await wait(3500);
-
-
-    // SIDE VIEW
-    await rotateTo(-180, 2500);
-
-    await wait(3500);
-
-
-    // BOTTOM VIEW
-    await rotateTo(-270, 2500);
-
-    await wait(3500);
-
-
-    // REAR VIEW
-    await rotateTo(-360, 2500);
-
-    await wait(3500);
-
-
-    // Return to starting view
-    await rotateTo(-450, 2500);
+    return new Promise(resolve => {
+        setTimeout(resolve, milliseconds);
+    });
 
 }
 
 
-function wait(milliseconds) {
+/* THE TECHNICAL TOUR */
+async function startTour() {
 
-    return new Promise(resolve => {
-
-        setTimeout(resolve, milliseconds);
-
+    /* Starting position */
+    carRotation.setAttribute("rotation", {
+        x: 0,
+        y: 0,
+        z: 0
     });
+
+
+    /* Let the viewer see the starting car */
+    await wait(3000);
+
+
+    /*
+        FRONT → TOP
+
+        We pitch the car upward.
+    */
+    await rotateTo(-90, 0, 0, 2500);
+
+    await wait(3000);
+
+
+    /*
+        TOP → SIDE
+
+        Return upright, then rotate around Y.
+    */
+    await rotateTo(0, -90, 0, 2500);
+
+    await wait(3000);
+
+
+    /*
+        SIDE → BOTTOM
+    */
+    await rotateTo(90, -90, 0, 2500);
+
+    await wait(3000);
+
+
+    /*
+        BOTTOM → REAR
+    */
+    await rotateTo(0, -180, 0, 2500);
+
+    await wait(3000);
+
+
+    /*
+        REAR → START
+    */
+    await rotateTo(0, -360, 0, 2500);
 
 }
 

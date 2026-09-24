@@ -2,157 +2,73 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STEM Racing AR Technical Presentation</title>
 
-
-    <!-- A-Frame -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
-
-    <!-- MindAR -->
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-
     <style>
-
         body {
             margin: 0;
             overflow: hidden;
         }
-
     </style>
-
 </head>
-
 
 <body>
 
-
 <a-scene
-
     mindar-image="imageTargetSrc: targets.mind;"
-
     color-space="sRGB"
-
     renderer="
         colorManagement: true,
         physicallyCorrectLights
     "
-
     vr-mode-ui="enabled: false"
-
-    device-orientation-permission-ui="enabled: false"
->
-
-
-    <!-- =========================
-         CAR MODEL
-         ========================= -->
+    device-orientation-permission-ui="enabled: false">
 
     <a-assets>
-
         <a-asset-item
             id="carModel"
             src="AR1.glb">
         </a-asset-item>
-
     </a-assets>
 
-
-    <!-- =========================
-         CAMERA
-         ========================= -->
-
     <a-camera
-
         position="0 0 0"
-
         look-controls="enabled: false">
-
     </a-camera>
 
-
-    <!-- =========================
-         AR IMAGE TARGET
-         ========================= -->
-
-    <a-entity
-        mindar-image-target="targetIndex: 0"
-    >
-
-
-        <!--
-            This parent controls
-            the car's animation.
-        -->
+    <a-entity mindar-image-target="targetIndex: 0">
 
         <a-entity id="carRotation">
 
-
-            <!-- =========================
-                 YOUR WORKING CAR
-                 ========================= -->
-
             <a-gltf-model
-
                 id="carModelAR"
-
                 src="#carModel"
-
                 position="0 -1.5 0"
-
                 rotation="0 -90 0"
-
                 scale="15 15 15">
-
             </a-gltf-model>
-
 
         </a-entity>
 
     </a-entity>
 
-
 </a-scene>
 
-
-
-<!-- =====================================================
-     JAVASCRIPT
-     ===================================================== -->
-
 <script>
-
-
-/* Get the car rotation controller */
 
 const carRotation =
     document.querySelector("#carRotation");
 
-
-/* Get the MindAR target */
-
 const target =
     document.querySelector("[mindar-image-target]");
 
-
-/* Prevent the animation from starting repeatedly */
-
 let tourStarted = false;
 
-
-
-/* =====================================================
-   START WHEN THE CARD IS DETECTED
-   ===================================================== */
 
 target.addEventListener("targetFound", () => {
 
@@ -167,36 +83,22 @@ target.addEventListener("targetFound", () => {
 });
 
 
-
-/* =====================================================
-   SMOOTH ROTATION FUNCTION
-   ===================================================== */
-
 function rotateTo(x, y, z, duration) {
 
     return new Promise(resolve => {
 
-
-        /* Current rotation */
-
         const start =
             carRotation.getAttribute("rotation");
-
 
         const startX = start.x;
         const startY = start.y;
         const startZ = start.z;
 
-
         const startTime =
             performance.now();
 
 
-
         function animate(time) {
-
-
-            /* Calculate animation progress */
 
             const progress =
                 Math.min(
@@ -205,13 +107,9 @@ function rotateTo(x, y, z, duration) {
                 );
 
 
-            /* Smooth ease-in / ease-out */
-
             const eased =
                 progress < 0.5
-
                     ? 2 * progress * progress
-
                     : 1 -
                       Math.pow(
                           -2 * progress + 2,
@@ -219,26 +117,18 @@ function rotateTo(x, y, z, duration) {
                       ) / 2;
 
 
-
-            /* Calculate current rotation */
-
             const currentX =
                 startX +
                 (x - startX) * eased;
-
 
             const currentY =
                 startY +
                 (y - startY) * eased;
 
-
             const currentZ =
                 startZ +
                 (z - startZ) * eased;
 
-
-
-            /* Apply rotation */
 
             carRotation.setAttribute(
                 "rotation",
@@ -250,16 +140,11 @@ function rotateTo(x, y, z, duration) {
             );
 
 
-
-            /* Continue animation */
-
             if (progress < 1) {
 
                 requestAnimationFrame(animate);
 
-            }
-
-            else {
+            } else {
 
                 resolve();
 
@@ -275,11 +160,6 @@ function rotateTo(x, y, z, duration) {
 }
 
 
-
-/* =====================================================
-   WAIT FUNCTION
-   ===================================================== */
-
 function wait(milliseconds) {
 
     return new Promise(resolve => {
@@ -294,19 +174,11 @@ function wait(milliseconds) {
 }
 
 
-
-/* =====================================================
-   TECHNICAL PRESENTATION
-   ===================================================== */
-
 async function startTour() {
 
-
-    /* ================================================
-       STARTING POSITION
-       
-       TOP VIEW
-       ================================================ */
+    /* =========================
+       TOP
+       ========================= */
 
     carRotation.setAttribute(
         "rotation",
@@ -317,16 +189,12 @@ async function startTour() {
         }
     );
 
-
-    /* Let viewer see the top/start */
-
     await wait(3000);
 
 
-
-    /* ================================================
-       MOVEMENT 1 — BOTTOM
-       ================================================ */
+    /* =========================
+       BOTTOM
+       ========================= */
 
     await rotateTo(
         0,
@@ -335,16 +203,12 @@ async function startTour() {
         2500
     );
 
-
-    /* Pause */
-
     await wait(3500);
 
 
-
-    /* ================================================
-       MOVEMENT 2 — FRONT
-       ================================================ */
+    /* =========================
+       FRONT
+       ========================= */
 
     await rotateTo(
         -90,
@@ -353,16 +217,12 @@ async function startTour() {
         2500
     );
 
-
-    /* Pause */
-
     await wait(3500);
 
 
-
-    /* ================================================
-       MOVEMENT 3 — SIDE
-       ================================================ */
+    /* =========================
+       SIDE
+       ========================= */
 
     await rotateTo(
         -90,
@@ -371,34 +231,28 @@ async function startTour() {
         2500
     );
 
-
-    /* Pause */
-
     await wait(3500);
 
 
-
-    /* ================================================
-       MOVEMENT 4 — BACK
-       ================================================ */
+    /* =========================
+       BACK
+       Same 90° movement
+       as FRONT → SIDE
+       ========================= */
 
     await rotateTo(
+        -90,
         0,
-        180,
         0,
         2500
     );
 
-
-    /* Pause */
-
     await wait(3500);
 
 
-
-    /* ================================================
+    /* =========================
        RETURN TO TOP
-       ================================================ */
+       ========================= */
 
     await rotateTo(
         0,
@@ -406,17 +260,12 @@ async function startTour() {
         0,
         2500
     );
-
-
-    /* Final pause */
 
     await wait(2000);
 
 }
 
-
 </script>
 
 </body>
-
 </html>
